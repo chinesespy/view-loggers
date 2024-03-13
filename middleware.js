@@ -19,6 +19,7 @@ export async function middleware(req){
     // Return the image.
     return NextResponse.rewrite(new URL("/mini.png",req.url))
   }else{
+    console.log(source);
     // Make a message for whoever takes the risk to directly click.
     return NextResponse.rewrite(new URL("/page.html",req.url));
   }
